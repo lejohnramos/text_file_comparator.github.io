@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Comparator with PyScript</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            white-space: pre-wrap; /* Keep whitespace formatting */
+        }
+        .highlighted {
+            display: inline-block;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Comparator with PyScript</h1>
+    <textarea id="text1" placeholder="Enter the first text here..."></textarea>
+    <textarea id="text2" placeholder="Enter the second text here..."></textarea>
+    <button id="compareBtn">Compare</button>
+
+    <div class="result">
+        <h2>Comparison Results</h2>
+        <h3>Text 1</h3>
+        <div id="highlightedText1" class="highlighted"></div>
+        <h3>Text 2</h3>
+        <div id="highlightedText2" class="highlighted"></div>
+    </div>
+
+    <py-script>
+        from js import document
+        import difflib
+
+        def compare_texts(ev):
+            text1 = document.getElementById("text1").value
+            text2 = document.getElementById("text2").value
+
+            # Generate the differences
+            d = difflib.ndiff(text1.splitlines(), text2.splitlines())
+            highlighted_text1 = ""
+            highlighted_text2 = ""
+
+            for line in d:
+                if line.startswith('+ '):  # Added in text2
+                    highlighted_text2 += f'<span style="background-color: #d4edda;">{line[2:]}</span><br>'
+                elif line.startswith('- '):  # Removed from text1
+                    highlighted_text1 += f'<span style="background-color: #f8d7da;">{line[2:]}</span><br>'
+                elif not line.startswith('? '):  # Ignore lines that start with '? '
+                    # Only include unchanged lines
+                    highlighted_text1 += line[2:] + '<br>'
+                    highlighted_text2 += line[2:] + '<br>'
+
+            # Display the results
+            document.getElementById("highlightedText1").innerHTML = highlighted_text1
+            document.getElementById("highlightedText2").innerHTML = highlighted_text2
+
+        document.getElementById("compareBtn").bind("click", compare_texts)
+    </py-script>
+</body>
+</html>
