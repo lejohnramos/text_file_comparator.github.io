@@ -43,7 +43,7 @@
 
     <py-script>
         from js import document
-        from pyscript import create_proxy
+        from pyscript import create_once_callable
         import difflib
 
         def compare_texts(ev):
@@ -69,8 +69,8 @@
             document.getElementById("highlightedText1").innerHTML = highlighted_text1
             document.getElementById("highlightedText2").innerHTML = highlighted_text2
 
-        # Use create_proxy to bind the click event
-        document.getElementById("compareBtn").addEventListener("click", create_proxy(compare_texts))
+        # Use create_once_callable to bind the click event
+        document.getElementById("compareBtn").addEventListener("click", create_once_callable(compare_texts))
     </py-script>
 </body>
 </html>
