@@ -61,14 +61,15 @@
                     highlighted_text1 += f'<span style="background-color: #f8d7da;">{line[2:]}</span><br>'
                 elif not line.startswith('? '):  # Ignore lines that start with '? '
                     # Only include unchanged lines
-                    highlighted_text1 += line[2:] + '<br>'
-                    highlighted_text2 += line[2:] + '<br>'
+                    highlighted_text1 += f'{line[2:]}<br>'
+                    highlighted_text2 += f'{line[2:]}<br>'
 
             # Display the results
             document.getElementById("highlightedText1").innerHTML = highlighted_text1
             document.getElementById("highlightedText2").innerHTML = highlighted_text2
 
-        document.getElementById("compareBtn").bind("click", compare_texts)
+        # Use .addEventListener instead of .bind for the button click
+        document.getElementById("compareBtn").addEventListener("click", compare_texts)
     </py-script>
 </body>
 </html>
