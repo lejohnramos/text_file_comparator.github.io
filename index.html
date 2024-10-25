@@ -68,8 +68,8 @@
             document.getElementById("highlightedText1").innerHTML = highlighted_text1
             document.getElementById("highlightedText2").innerHTML = highlighted_text2
 
-        # Correcting the event binding method
-        document.getElementById("compareBtn").bind("click", compare_texts)
+        # Use .addEventListener instead of .bind for the button click
+        document.getElementById("compareBtn").addEventListener("click", compare_texts)
     </py-script>
 </body>
 </html>
